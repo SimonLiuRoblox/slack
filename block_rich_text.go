@@ -164,7 +164,7 @@ func (e *RichTextList) UnmarshalJSON(b []byte) error {
 	}
 	*e = RichTextList{
 		Type:     RTEList,
-		Indent:   raw.Indent
+		Indent:   raw.Indent,
 		Elements: elems,
 		Style:    raw.Style,
 	}
