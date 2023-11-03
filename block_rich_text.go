@@ -104,14 +104,16 @@ const (
 
 type RichTextList struct {
 	Type     RichTextElementType     `json:"type"`
+	Indent   int			 `json:"indent"`
 	Elements []RichTextElement       `json:"elements"`
 	Style    RichTextListElementType `json:"style"`
 }
 
 // NewRichTextList returns a new rich text list element.
-func NewRichTextList(style RichTextListElementType, elements ...RichTextElement) *RichTextList {
+func NewRichTextList(style RichTextListElementType, indent int, elements ...RichTextElement) *RichTextList {
 	return &RichTextList{
 		Type:     RTEList,
+		Indent:   indent,
 		Elements: elements,
 		Style:    style,
 	}
@@ -126,6 +128,7 @@ func (e *RichTextList) UnmarshalJSON(b []byte) error {
 	var raw struct {
 		RawElements []json.RawMessage       `json:"elements"`
 		Style       RichTextListElementType `json:"style"`
+		Indent      int		            `json:"indent"`
 	}
 	if string(b) == "{}" {
 		return nil
@@ -161,6 +164,7 @@ func (e *RichTextList) UnmarshalJSON(b []byte) error {
 	}
 	*e = RichTextList{
 		Type:     RTEList,
+		Indent:   raw.Indent
 		Elements: elems,
 		Style:    raw.Style,
 	}
